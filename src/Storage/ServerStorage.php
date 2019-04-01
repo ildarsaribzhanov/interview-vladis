@@ -59,7 +59,7 @@ class ServerStorage implements ServerStorageContract
         $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE id = :id");
         $stmt->execute(['id' => $id]);
 
-        $row    = $stmt->fetch(PDO::FETCH_LAZY);
+        $row    = $stmt->fetch();
         $server = $this->parseOne($row);
 
         return $server;

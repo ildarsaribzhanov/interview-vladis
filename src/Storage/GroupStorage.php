@@ -62,7 +62,7 @@ class GroupStorage implements GroupStorageContract
         $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE id = :id");
         $stmt->execute(['id' => $id]);
 
-        $row   = $stmt->fetch(PDO::FETCH_LAZY);
+        $row   = $stmt->fetch();
         $group = $this->parseOne($row);
 
         return $group;

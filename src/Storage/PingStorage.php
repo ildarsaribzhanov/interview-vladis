@@ -64,7 +64,7 @@ class PingStorage implements PingStorageContract
         $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE id = :id");
         $stmt->execute(['id' => $id]);
 
-        $row  = $stmt->fetch(PDO::FETCH_LAZY);
+        $row  = $stmt->fetch();
         $ping = $this->parseOne($row);
 
         return $ping;
@@ -158,7 +158,6 @@ class PingStorage implements PingStorageContract
 
         $stm = $this->pdo->prepare($sql);
 
-        print_r($stm);
         $stm->execute($data);
 
         $ping = new ServerPing($this->pdo->lastInsertId(), $server_id);
