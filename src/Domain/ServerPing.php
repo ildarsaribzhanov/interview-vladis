@@ -106,4 +106,20 @@ class ServerPing
     {
         return $this->date;
     }
+
+    /**
+     * Получить дату запроса в человекочитаемом виде
+     */
+    public function getDateForView()
+    {
+        return $this->date->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * @param DateTime $date
+     */
+    public function setDate(DateTime $date): void
+    {
+        $this->date = $date;
+    }
 }

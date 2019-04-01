@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 use App\Domain\ServerGroup;
+use App\Domain\ServerPing;
 use App\Storage\GroupStorage;
 use App\Storage\PingStorage;
 use App\Storage\ServerStorage;
@@ -37,7 +38,7 @@ $pingStor   = new PingStorage($pdo);
 echo '<style>
 *{padding: 0; margin: 0;} 
 table {border-collapse: collapse;}
-td {padding:20px; vertical-align: bottom; border: 1px solid;}
+td {padding:20px; vertical-align: top; border: 1px solid;}
 button {padding: 5px;}
 </style>';
 
@@ -45,7 +46,7 @@ $allGroups = $groupStor->getAll();
 echo '<table>';
 /** @var ServerGroup $groupItm */
 foreach ($allGroups as $groupItm) {
-    echo '<tr><td colspan="2"><h3>Группа серверов: ' . $groupItm->getTitle() . '</h3></td></tr>';
+    echo '<tr><td colspan="3"><h3>Группа серверов: ' . $groupItm->getTitle() . '</h3></td></tr>';
 
     $servers = $groupItm->getServers(new ServerStorage($pdo));
 
@@ -55,6 +56,15 @@ foreach ($allGroups as $groupItm) {
     foreach ($servers as $serverItm) {
         echo '<tr>
             <td>ip сервера: ' . $serverItm->getIp() . '</td>
+            <td><h4>История проверок:</h4>';
+            $pings = $serverItm->getPings(new PingStorage($pdo));
+            /** @var ServerPing $pingItm */
+            foreach ($pings as $pingItm) {
+                echo '<b>Дата:</b> <i>' . $pingItm->getDateForView() . '</i>; 
+                    <b>Статус:</b> <i>' . $pingItm->getStatus() . '</i>;
+                    <b>Время запроса:</b> <i>' . $pingItm->getResponseTime() . '</i><br/>';
+            }
+            echo '</td>
             <td>
                 <form method="post">
                     <input type="hidden" name="server-id" value="' . $serverItm->getId() . '" />
