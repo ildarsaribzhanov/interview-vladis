@@ -25,9 +25,18 @@ interface PingStorageContract
     /**
      * Выборка всех серверов
      *
-     * @return array
+     * @return ServerPing[]
      */
     public function getAll(): array;
+
+    /**
+     * Все пинги сервера
+     *
+     * @param int $server_id
+     *
+     * @return ServerPing[]
+     */
+    public function getForServer(int $server_id): array;
 
     /**
      * Сохранить сервер

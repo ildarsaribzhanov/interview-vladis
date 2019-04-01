@@ -5,6 +5,7 @@ namespace App\Storage;
 
 use App\Domain\ServerPing;
 use App\Storage\Contracts\PingStorageContract;
+use DateTime;
 use Exception;
 use PDO;
 
@@ -39,11 +40,13 @@ class PingStorage implements PingStorageContract
         $server_id     = (int)$row['server_id'];
         $status        = $row['status'];
         $response_time = (int)$row['response_time'];
+        $date          = new DateTime($row['created_at']);
 
 
         $ping = new ServerPing($id, $server_id);
         $ping->setStatus($status);
         $ping->setResponseTime($response_time);
+        $ping->setDate($date);
 
         return $ping;
     }
@@ -78,6 +81,29 @@ class PingStorage implements PingStorageContract
         $res = [];
 
         $data = $this->pdo->query("SELECT * FROM $this->table")->fetchAll();
+
+        foreach ($data as $dataItm) {
+            $res[] = $this->parseOne($dataItm);
+        }
+
+        return $res;
+    }
+
+    /**
+     * Все пинги сервера
+     *
+     * @param int $server_id
+     *
+     * @return ServerPing[]
+     * @throws Exception
+     */
+    public function getForServer(int $server_id): array
+    {
+        $res = [];
+
+        $stm = $this->pdo->prepare("SELECT * FROM $this->table where server_id = :server_id");
+        $stm->execute(['server_id' => $server_id]);
+        $data = $stm->fetchAll();
 
         foreach ($data as $dataItm) {
             $res[] = $this->parseOne($dataItm);

@@ -2,6 +2,8 @@
 
 namespace App\Domain;
 
+use App\Storage\Contracts\PingStorageContract;
+
 /**
  * Сервер
  *
@@ -81,5 +83,15 @@ class Server
     public function getComment(): string
     {
         return $this->comment;
+    }
+
+    /**
+     * @param PingStorageContract $pingStorage
+     *
+     * @return ServerPing[]
+     */
+    public function getPings(PingStorageContract $pingStorage): array
+    {
+        return $pingStorage->getForServer($this->id);
     }
 }
