@@ -74,11 +74,14 @@ class PingService
 
         if ($httpcode >= 200 && $httpcode < 300) {
             $ping->setStatus('success');
-            $ping->setResponseTime($time);
+            $ping->setResponseTime($time * 1000);
+
+            $this->pingStorage->save($ping);
 
             return;
         }
 
         $ping->setStatus('fail');
+        $this->pingStorage->save($ping);
     }
 }

@@ -68,11 +68,11 @@ class ServerPing
     /**
      * Установка времени выполнения запроса
      *
-     * @param int $microseconds
+     * @param int $millisecond
      */
-    public function setResponseTime(int $microseconds)
+    public function setResponseTime(int $millisecond)
     {
-        $this->response_time = $microseconds;
+        $this->response_time = $millisecond;
     }
 
     /**

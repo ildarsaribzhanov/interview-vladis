@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 
 use App\Domain\ServerGroup;
 use App\Domain\ServerPing;
+use App\Services\PingService;
 use App\Storage\GroupStorage;
 use App\Storage\PingStorage;
 use App\Storage\ServerStorage;
@@ -42,13 +43,19 @@ td {padding:20px; vertical-align: top; border: 1px solid;}
 button {padding: 5px;}
 </style>';
 
+if (isset($_POST['server-id'])) {
+    $pingService = new PingService($pingStor, $serverStor);
+
+    $pingService->sendPing((int)$_POST['server-id']);
+}
+
 $allGroups = $groupStor->getAll();
 echo '<table>';
 /** @var ServerGroup $groupItm */
 foreach ($allGroups as $groupItm) {
     echo '<tr><td colspan="3"><h3>Группа серверов: ' . $groupItm->getTitle() . '</h3></td></tr>';
 
-    $servers = $groupItm->getServers(new ServerStorage($pdo));
+    $servers = $groupItm->getServers($serverStor);
 
     /*
      * todo добавить защиту nonce
@@ -57,12 +64,12 @@ foreach ($allGroups as $groupItm) {
         echo '<tr>
             <td>ip сервера: ' . $serverItm->getIp() . '</td>
             <td><h4>История проверок:</h4>';
-            $pings = $serverItm->getPings(new PingStorage($pdo));
+            $pings = $serverItm->getPings($pingStor);
             /** @var ServerPing $pingItm */
             foreach ($pings as $pingItm) {
                 echo '<b>Дата:</b> <i>' . $pingItm->getDateForView() . '</i>; 
-                    <b>Статус:</b> <i>' . $pingItm->getStatus() . '</i>;
-                    <b>Время запроса:</b> <i>' . $pingItm->getResponseTime() . '</i><br/>';
+                            <b>Статус:</b> <i>' . $pingItm->getStatus() . '</i>;
+                            <b>Время запроса:</b> <i>' . $pingItm->getResponseTime() . 'мс</i><br/>';
             }
             echo '</td>
             <td>
