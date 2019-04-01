@@ -32,20 +32,20 @@ interface PingStorageContract
     /**
      * Сохранить сервер
      *
-     * @param ServerPing $server
+     * @param ServerPing $ping
      *
      * @return bool
      */
-    public function save(ServerPing $server): bool;
+    public function save(ServerPing $ping): bool;
 
     /**
      * Создание нового сервера
      *
-     * @param int    $group_id
-     * @param string $ip
-     * @param string $comment
+     * @param int    $server_id
+     * @param string $status
+     * @param int    $response_time
      *
      * @return ServerPing
      */
-    public function create(int $group_id, string $ip, string $comment = ''): ServerPing;
+    public function create(int $server_id, string $status = 'wait', int $response_time = 0): ServerPing;
 }

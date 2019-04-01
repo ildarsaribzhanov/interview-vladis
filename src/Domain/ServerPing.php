@@ -34,15 +34,21 @@ class ServerPing
     /**
      * ServerPing constructor.
      *
-     * @param int      $id
-     * @param int      $server_id
-     * @param DateTime $date
+     * @param int $id
+     * @param int $server_id
      */
-    public function __construct(int $id, int $server_id, DateTime $date)
+    public function __construct(int $id, int $server_id)
     {
         $this->id        = $id;
         $this->server_id = $server_id;
-        $this->date      = $date;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**
@@ -70,12 +76,34 @@ class ServerPing
     }
 
     /**
-     * Установка даты запроса
-     *
-     * @param DateTime $dateTime
+     * @return int
      */
-    public function setDate(DateTime $dateTime)
+    public function getResponseTime(): int
     {
-        $this->date = $dateTime;
+        return $this->response_time;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return int
+     */
+    public function getServerId(): int
+    {
+        return $this->server_id;
+    }
+
+    /**
+     * Получить дату запроса
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

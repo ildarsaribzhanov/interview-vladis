@@ -6,7 +6,7 @@
 
 - Группы серверов [id, title]
 - Сервера [id,group_id,ip,comment]
-- Результаты пинга [id, server_id,success, response_time, date]
+- Результаты пинга [id, server_id, result, response_time, date]
 
 Нужно предоставить пользователю интерфейс в виде html страницы
 с деревом групп и серверов, возможностью добавить группу ip в конкретную группу

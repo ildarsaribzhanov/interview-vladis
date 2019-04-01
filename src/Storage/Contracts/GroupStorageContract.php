@@ -26,18 +26,18 @@ interface GroupStorageContract
     /**
      * Сохранить группу
      *
-     * @param ServerGroup $server
+     * @param ServerGroup $group
      *
      * @return bool
      */
-    public function save(ServerGroup $server): bool;
+    public function save(ServerGroup $group): bool;
 
     /**
      * Создание новой группы
      *
-     * @param int $title
+     * @param string $title
      *
      * @return ServerGroup
      */
-    public function create(int $title): ServerGroup;
+    public function create(string $title): ServerGroup;
 }

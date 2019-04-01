@@ -4,7 +4,7 @@
 namespace App\Storage\Contracts;
 
 
-use Server;
+use App\Domain\Server;
 
 /**
  * Контракт
@@ -26,7 +26,7 @@ interface ServerStorageContract
     /**
      * Выборка всех серверов
      *
-     * @return array
+     * @return Server[]
      */
     public function getAll(): array;
 

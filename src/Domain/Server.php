@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Domain;
 
 /**
  * Сервер
@@ -40,6 +41,30 @@ class Server
         $this->id       = $id;
         $this->group_id = $group_id;
         $this->ip       = $ip;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGroupId(): int
+    {
+        return $this->group_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIp(): string
+    {
+        return $this->ip;
     }
 
     /**
