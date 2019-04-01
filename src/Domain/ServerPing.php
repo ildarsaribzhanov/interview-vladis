@@ -3,6 +3,7 @@
 namespace App\Domain;
 
 
+use App\Exceptions\UndefinedStatusException;
 use DateTime;
 
 /**
@@ -20,11 +21,11 @@ class ServerPing
     /** @var int */
     private $server_id;
 
-    /** @var bool */
-    private $success;
+    /** @var string */
+    private $status = 'wait';
 
     /** @var int */
-    private $response_time;
+    private $response_time = null;
 
     /** @var DateTime */
     private $date;
@@ -33,30 +34,29 @@ class ServerPing
     /**
      * ServerPing constructor.
      *
-     * @param int $id
-     * @param int $server_id
+     * @param int      $id
+     * @param int      $server_id
+     * @param DateTime $date
      */
-    public function __construct(int $id, int $server_id)
+    public function __construct(int $id, int $server_id, DateTime $date)
     {
         $this->id        = $id;
         $this->server_id = $server_id;
+        $this->date      = $date;
     }
 
     /**
-     * Установка успешного статуса
+     * @param string $status
+     *
+     * @throws UndefinedStatusException
      */
-    public function setSuccess()
+    public function setStatus(string $status)
     {
-        $this->success = true;
-    }
+        if (!in_array(strtolower($status), ['wait', 'fail', 'success'])) {
+            throw new  UndefinedStatusException('Неизвестный статус');
+        }
 
-
-    /**
-     *  Установка не успешногой статуса
-     */
-    public function setUnsuccess()
-    {
-        $this->success = false;
+        $this->status = $status;
     }
 
     /**
