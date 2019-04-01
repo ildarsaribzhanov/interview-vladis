@@ -43,7 +43,7 @@ class GroupStorage implements GroupStorageContract
     private function parseOne(array $row)
     {
         $id    = (int)$row['id'];
-        $title = (int)$row['title'];
+        $title = $row['title'];
 
         $group = new ServerGroup($id, $title);
 

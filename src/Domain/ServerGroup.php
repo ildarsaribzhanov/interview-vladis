@@ -3,6 +3,8 @@
 namespace App\Domain;
 
 
+use App\Storage\Contracts\ServerStorageContract;
+
 /**
  * Группа серверов
  *
@@ -46,5 +48,15 @@ class ServerGroup
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @param ServerStorageContract $serverStorage
+     *
+     * @return Server[]
+     */
+    public function getServers(ServerStorageContract $serverStorage): array
+    {
+        return $serverStorage->getForGroup($this->getId());
     }
 }

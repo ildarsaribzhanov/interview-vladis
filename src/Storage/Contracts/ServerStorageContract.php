@@ -31,6 +31,15 @@ interface ServerStorageContract
     public function getAll(): array;
 
     /**
+     * Выборка всех серверов в группе
+     *
+     * @param int $group_id
+     *
+     * @return Server[]
+     */
+    public function getForGroup(int $group_id): array;
+
+    /**
      * Сохранить сервер
      *
      * @param Server $server

@@ -84,6 +84,28 @@ class ServerStorage implements ServerStorageContract
     }
 
     /**
+     * Выборка всех серверов в группе
+     *
+     * @param int $group_id
+     *
+     * @return Server[]
+     */
+    public function getForGroup(int $group_id): array
+    {
+        $res = [];
+
+        $stm = $this->pdo->prepare("SELECT * FROM $this->table where group_id = :group_id");
+        $stm->execute(['group_id' => $group_id]);
+        $data = $stm->fetchAll();
+
+        foreach ($data as $dataItm) {
+            $res[] = $this->parseOne($dataItm);
+        }
+
+        return $res;
+    }
+
+    /**
      * Сохранить сервер
      *
      * @param Server $server
